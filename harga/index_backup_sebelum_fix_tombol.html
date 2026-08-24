@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  <title>Paket Lisensi - GOLD HUNTER EA</title>
+ 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+ 
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0f14;
+      color: #ffffff;
+    }
+ 
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+ 
+    header {
+      padding: 20px;
+      border-bottom: 1px solid #242c35;
+      background: #0b0f14;
+    }
+ 
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+ 
+    .brand {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+ 
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+    }
+ 
+    .nav-links a:hover {
+      color: #d5b45a;
+    }
+ 
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 55px 20px;
+    }
+ 
+    .hero {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+ 
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 40px;
+    }
+ 
+    .hero p {
+      color: #aeb7c2;
+      margin: 0;
+    }
+ 
+    #loading {
+      text-align: center;
+      padding: 40px;
+      color: #aeb7c2;
+    }
+ 
+    #error {
+      display: none;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 10px;
+      background: #35191d;
+      border: 1px solid #7b3038;
+      color: #ffb5bc;
+    }
+ 
+    .packages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+ 
+    .package {
+      position: relative;
+      background: #121820;
+      border: 1px solid #29333e;
+      border-radius: 16px;
+      padding: 25px;
+      transition: 0.2s;
+    }
+ 
+    .package:hover {
+      transform: translateY(-4px);
+      border-color: #d5b45a;
+    }
+ 
+    .package.popular {
+      border: 2px solid #d5b45a;
+    }
+ 
+    .popular-label {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: #d5b45a;
+      color: #111;
+      font-size: 12px;
+      font-weight: bold;
+    }
+ 
+    .package h2 {
+      margin-top: 0;
+      font-size: 22px;
+    }
+ 
+    .duration {
+      color: #aeb7c2;
+      margin-bottom: 18px;
+    }
+ 
+    .normal-price {
+      min-height: 20px;
+      color: #737d88;
+      text-decoration: line-through;
+    }
+ 
+    .price {
+      font-size: 30px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+ 
+    .buy-button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: 0;
+      border-radius: 10px;
+      background: #d5b45a;
+      color: #111;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+ 
+    .buy-button:hover {
+      opacity: 0.9;
+    }
+ 
+    /* MODAL */
+ 
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.78);
+      padding: 20px;
+      overflow-y: auto;
+    }
+ 
+    .modal-box {
+      max-width: 650px;
+      margin: 35px auto;
+      padding: 30px;
+      background: #121820;
+      border: 1px solid #303b47;
+      border-radius: 16px;
+    }
+ 
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+ 
+    .modal-header h2 {
+      margin: 0;
+    }
+ 
+    .close {
+      border: 0;
+      background: transparent;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+ 
+    .selected-package {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: #0b0f14;
+      border: 1px solid #252f39;
+    }
+ 
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-size: 14px;
+      color: #c7cfd8;
+    }
+ 
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #303b47;
+      border-radius: 8px;
+      background: #0b0f14;
+      color: white;
+      outline: none;
+    }
+ 
+    input:focus,
+    select:focus {
+      border-color: #d5b45a;
+    }
+ 
+    .submit-button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #d5b45a;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+    }
+ 
+    .submit-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+ 
+    #form-message {
+      display: none;
+      margin-top: 15px;
+      padding: 13px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+ 
+    .success {
+      background: #14331f;
+      color: #a9e5b9;
+    }
+ 
+    .danger {
+      background: #35191d;
+      color: #ffb5bc;
+    }
+ 
+    footer {
+      margin-top: 50px;
+      padding: 30px 20px;
+      text-align: center;
+      color: #737d88;
+      border-top: 1px solid #242c35;
+    }
+ 
+    @media (max-width: 700px) {
+      .nav {
+        flex-direction: column;
+      }
+ 
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+ 
+      .hero h1 {
+        font-size: 30px;
+      }
+    }
+  /* FIX LAYOUT HARGA */
+body {
+  background: #0b0f14 !important;
+  color: #ffffff !important;
+}
+.packages {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  width: 100% !important;
+}
+.package {
+  display: block !important;
+  position: relative !important;
+  background: #121820 !important;
+  color: #ffffff !important;
+  border: 1px solid #29333e !important;
+  border-radius: 16px !important;
+  padding: 25px !important;
+  min-height: 200px !important;
+}
+.package h2 {
+  color: #ffffff !important;
+}
+.duration {
+  color: #aeb7c2 !important;
+}
+.price {
+  color: #ffffff !important;
+}
+.buy-button {
+  display: block !important;
+  width: 100% !important;
+}
+@media (max-width: 800px) {
+  .packages {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 520px) {
+  .packages {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* PREMIUM FORM & BACKGROUND */
+body {
+  background: #151b24 !important;
+  color: #ffffff !important;
+}
+
+header {
+  background: #111720 !important;
+}
+
+.package {
+  background: #1c2530 !important;
+  border-color: #354252 !important;
+}
+
+.package:hover {
+  border-color: #d5b45a !important;
+}
+
+.modal-box {
+  background: #1b2530 !important;
+  border: 1px solid #3b4756 !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45) !important;
+}
+
+.modal-header {
+  margin-bottom: 18px !important;
+}
+
+.modal-header h2 {
+  font-size: 25px !important;
+  color: #ffffff !important;
+}
+
+.selected-package {
+  background: #121a23 !important;
+  border: 1px solid #394655 !important;
+  padding: 18px !important;
+  margin: 20px 0 25px !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+}
+
+#orderForm {
+  max-width: 560px !important;
+  margin: 0 auto !important;
+}
+
+label {
+  margin: 16px 0 7px !important;
+  color: #d7dee7 !important;
+  font-weight: 600 !important;
+}
+
+input,
+select {
+  height: 46px !important;
+  padding: 0 14px !important;
+  border: 1px solid #3b4756 !important;
+  border-radius: 9px !important;
+  background: #121a23 !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+}
+
+input::placeholder {
+  color: #7f8b99 !important;
+}
+
+input:focus,
+select:focus {
+  border-color: #d5b45a !important;
+  box-shadow: 0 0 0 2px rgba(213,180,90,.12) !important;
+}
+
+.submit-button {
+  height: 48px !important;
+  margin-top: 25px !important;
+  border-radius: 9px !important;
+  background: #d5b45a !important;
+  color: #111111 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+footer {
+  background: #111720 !important;
+}
+
+@media (max-width: 700px) {
+  .modal {
+    padding: 12px !important;
+  }
+
+  .modal-box {
+    padding: 22px !important;
+    margin: 15px auto !important;
+  }
+
+  #orderForm {
+    max-width: 100% !important;
+  }
+}
+/* FINAL NAV & FORM ALIGNMENT */
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 28px !important;
+}
+
+.nav-links a {
+  color: #f5f7fa !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+}
+
+.nav-links a:hover {
+  color: #d5b45a !important;
+}
+
+.modal-box {
+  max-width: 620px !important;
+  width: 100% !important;
+  margin: 30px auto !important;
+  padding: 30px !important;
+}
+
+.modal-box form {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.modal-box label {
+  width: 100% !important;
+  display: block !important;
+  text-align: left !important;
+  margin: 16px 0 7px !important;
+}
+
+.modal-box input,
+.modal-box select {
+  width: 100% !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+.modal-box .selected-package {
+  width: 100% !important;
+  display: block !important;
+  margin: 20px 0 24px !important;
+}
+
+.modal-box .submit-button {
+  width: 100% !important;
+  display: block !important;
+  margin: 24px 0 0 !important;
+}
+
+@media (max-width: 700px) {
+  .nav-links {
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .nav-links a {
+    font-size: 13px !important;
+  }
+
+  .modal-box {
+    padding: 20px !important;
+  }
+}
+</style>
+</head>
+ 
+<body>
+ 
+<header>
+  <div class="nav">
+ 
+    <div class="brand">
+      GOLD HUNTER EA
+    </div>
+ 
+    <div class="nav-links">
+      <a href="../index.html">HOME</a>
+      <a href="../produk/index.html">EA</a>
+      <a href="../cara-instalasi/index.html">CARA INSTALASI</a>
+      <a href="../faq/index.html">FAQ</a>
+    </div>
+ 
+  </div>
+</header>
+ 
+ 
+<main>
+ 
+  <section class="hero">
+ 
+    <h1>
+      Paket Lisensi GOLD HUNTER EA
+    </h1>
+ 
+    <p>
+      Pilih paket lisensi sesuai kebutuhan Anda.
+    </p>
+ 
+  </section>
+ 
+ 
+  <div id="loading">
+    Memuat paket lisensi...
+  </div>
+ 
+  <div id="error"></div>
+ 
+  <section
+    id="packages"
+    class="packages">
+  </section>
+ 
+</main>
+ 
+ 
+<!-- ==========================================
+     MODAL PEMBELIAN
+========================================== -->
+ 
+<div
+  id="buyModal"
+  class="modal">
+ 
+  <div class="modal-box">
+ 
+    <div class="modal-header">
+ 
+      <h2>
+        Pesan Lisensi
+      </h2>
+ 
+      <button
+        type="button"
+        class="close"
+        onclick="closeModal()">
+        ×
+      </button>
+ 
+    </div>
+ 
+ 
+    <div
+      id="selectedPackage"
+      class="selected-package">
+    </div>
+ 
+ 
+    <form id="orderForm">
+ 
+      <input
+        type="hidden"
+        id="productId">
+ 
+ 
+      <label for="customerName">
+        Nama Lengkap
+      </label>
+ 
+      <input
+        type="text"
+        id="customerName"
+        required
+        placeholder="Masukkan nama lengkap">
+ 
+ 
+      <label for="customerEmail">
+        Email
+      </label>
+ 
+      <input
+        type="email"
+        id="customerEmail"
+        required
+        placeholder="nama@email.com">
+ 
+ 
+      <label for="customerWhatsapp">
+        WhatsApp
+      </label>
+ 
+      <input
+        type="text"
+        id="customerWhatsapp"
+        required
+        placeholder="08xxxxxxxxxx">
+ 
+ 
+      <label for="mt5Account">
+        Nomor Akun MT5
+      </label>
+ 
+      <input
+        type="text"
+        id="mt5Account"
+        required
+        placeholder="Nomor akun MT5">
+ 
+ 
+      <label for="broker">
+        Broker
+      </label>
+ 
+      <input
+        type="text"
+        id="broker"
+        required
+        value="HFM"
+        placeholder="Nama broker">
+ 
+ 
+      <label for="paymentMethod">
+        Metode Pembayaran
+      </label>
+ 
+      <select
+        id="paymentMethod"
+        required>
+ 
+        <option value="">
+          Pilih metode pembayaran
+        </option>
+ 
+      </select>
+ 
+ 
+      <button
+        type="submit"
+        class="submit-button"
+        id="submitButton">
+ 
+        BUAT PESANAN
+ 
+      </button>
+ 
+ 
+      <div
+        id="form-message">
+      </div>
+ 
+    </form>
+ 
+  </div>
+ 
+</div>
+ 
+ 
+<footer>
+ 
+  © 2026 GOLD HUNTER EA
+ 
+</footer>
+ 
+ 
+<!-- ==========================================
+     SUPABASE
+========================================== -->
+ 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ 
+<!--
+  Menggunakan config.js MILIK ADMIN
+  Jangan mengubah file admin/config.js
+-->
+<script src="../admin/config.js"></script>
+ 
+ 
+<script>
+ 
+let supabaseClient = null;
+ 
+let selectedProduct = null;
+ 
+ 
+/* ==========================================
+   INIT SUPABASE
+========================================== */
+ 
+function initSupabase() {
+ 
+  if (
+    !window.GH_SUPABASE_URL ||
+    !window.GH_SUPABASE_PUBLISHABLE_KEY
+  ) {
+ 
+    showError(
+      "Konfigurasi Supabase tidak ditemukan."
+    );
+ 
+    return false;
+  }
+ 
+ 
+  supabaseClient =
+    window.supabase.createClient(
+      window.GH_SUPABASE_URL,
+      window.GH_SUPABASE_PUBLISHABLE_KEY
+    );
+ 
+ 
+  return true;
+}
+ 
+ 
+/* ==========================================
+   ERROR
+========================================== */
+ 
+function showError(message) {
+ 
+  document.getElementById(
+    "loading"
+  ).style.display = "none";
+ 
+ 
+  const errorBox =
+    document.getElementById("error");
+ 
+ 
+  errorBox.textContent =
+    message;
+ 
+ 
+  errorBox.style.display =
+    "block";
+}
+ 
+ 
+/* ==========================================
+   FORMAT RUPIAH
+========================================== */
+ 
+function rupiah(value) {
+ 
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0
+    }
+  ).format(value || 0);
+ 
+}
+ 
+ 
+/* ==========================================
+   DURASI
+========================================== */
+ 
+function durationText(product) {
+
+  if (product.duration_days === null) {
+
+    return "Lifetime";
+  }
+
+  if (product.duration_days === 30) {
+
+    return "1 Bulan";
+  }
+
+  if (product.duration_days === 60) {
+
+    return "2 Bulan";
+  }
+
+  if (product.duration_days === 90) {
+
+    return "3 Bulan";
+  }
+
+  if (product.duration_days === 180) {
+
+    return "6 Bulan";
+  }
+
+  if (product.duration_days === 365) {
+
+    return "12 Bulan";
+  }
+
+  return product.duration_days + " Hari";
+}
+ 
+ 
+/* ==========================================
+   HARGA AKTIF
+========================================== */
+ 
+function getProductPrice(product) {
+
+  return Number(
+    product.price || 0
+  );
+}
+ 
+ 
+/* ==========================================
+   LOAD PRODUCTS
+========================================== */
+ 
+async function loadProducts() {
+ 
+  if (!initSupabase()) {
+ 
+    return;
+  }
+ 
+ 
+  const {
+    data,
+    error
+  } = await supabaseClient
+ 
+    .from("license_packages")
+ 
+    .select(
+      "id,name,description,duration_days,price,is_active,sort_order"
+    )
+ 
+    .eq(
+      "is_active",
+      true
+    )
+ 
+    .order(
+      "sort_order",
+      {
+        ascending: true
+      }
+    );
+ 
+ 
+  if (error) {
+ 
+    showError(
+      "Gagal memuat paket: " +
+      error.message
+    );
+ 
+    return;
+  }
+ 
+ 
+  document.getElementById(
+    "loading"
+  ).style.display = "none";
+ 
+ 
+  if (
+    !data ||
+    data.length === 0
+  ) {
+ 
+    showError(
+      "Belum ada paket lisensi yang aktif."
+    );
+ 
+    return;
+  }
+ 
+ 
+  const container =
+    document.getElementById(
+      "packages"
+    );
+ 
+ 
+  container.innerHTML = "";
+ 
+ 
+  data.forEach(
+    product => {
+ 
+      const card =
+        document.createElement(
+          "div"
+        );
+ 
+ 
+      card.className = "package";
+
+      const price =
+        getProductPrice(
+          product
+        );
+ 
+ 
+
+      card.innerHTML = `
+ 
+ 
+        <h2>
+          ${product.name}
+        </h2>
+ 
+        <div class="duration">
+          ${durationText(product)}
+        </div>
+ 
+ 
+        <div class="price">
+          ${rupiah(price)}
+        </div>
+ 
+        <button
+          type="button"
+          class="buy-button">
+ 
+          BELI SEKARANG
+ 
+        </button>
+ 
+      `;
+ 
+ 
+      card
+        .querySelector(
+          ".buy-button"
+        )
+        .addEventListener(
+          "click",
+          function() {
+ 
+            openBuyModal(
+              product
+            );
+ 
+          }
+        );
+ 
+ 
+      container.appendChild(
+        card
+      );
+ 
+    }
+  );
+ 
+}
+ 
+ 
+/* ==========================================
+   OPEN MODAL
+========================================== */
+ 
+async function openBuyModal(
+  product
+) {
+ 
+  selectedProduct =
+    product;
+ 
+ 
+  document.getElementById(
+    "productId"
+  ).value =
+    product.id;
+ 
+ 
+  const price =
+    getProductPrice(
+      product
+    );
+ 
+ 
+  document.getElementById(
+    "selectedPackage"
+  ).innerHTML = `
+ 
+    <strong>
+      ${product.name}
+    </strong>
+ 
+    <br>
+ 
+    Durasi:
+    ${durationText(product)}
+ 
+    <br>
+ 
+    Harga:
+    ${rupiah(price)}
+ 
+  `;
+ 
+ 
+  document.getElementById(
+    "buyModal"
+  ).style.display =
+    "block";
+ 
+ 
+  await loadPaymentMethods();
+ 
+}
+ 
+ 
+/* ==========================================
+   CLOSE MODAL
+========================================== */
+ 
+function closeModal() {
+ 
+  document.getElementById(
+    "buyModal"
+  ).style.display =
+    "none";
+ 
+}
+ 
+ 
+/* ==========================================
+   KLIK AREA GELAP
+========================================== */
+ 
+document
+  .getElementById(
+    "buyModal"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
+ 
+      if (
+        event.target ===
+        this
+      ) {
+ 
+        closeModal();
+ 
+      }
+ 
+    }
+  );
+ 
+ 
+/* ==========================================
+   PAYMENT METHODS
+========================================== */
+ 
+async function loadPaymentMethods() {
+ 
+  const select =
+    document.getElementById(
+      "paymentMethod"
+    );
+ 
+ 
+  select.innerHTML = `
+    <option value="">
+      Memuat metode pembayaran...
+    </option>
+  `;
+ 
+ 
+  const {
+    data,
+    error
+  } = await supabaseClient
+ 
+    .from("payment_methods")
+ 
+    .select(
+      "id,name,method_type"
+    )
+ 
+    .eq(
+      "is_active",
+      true
+    );
+ 
+ 
+  if (error) {
+ 
+    select.innerHTML = `
+      <option value="">
+        Gagal memuat pembayaran
+      </option>
+    `;
+ 
+    return;
+  }
+ 
+ 
+  select.innerHTML = `
+    <option value="">
+      Pilih metode pembayaran
+    </option>
+  `;
+ 
+ 
+  if (
+    !data ||
+    data.length === 0
+  ) {
+ 
+    select.innerHTML = `
+      <option value="">
+        Belum ada metode pembayaran
+      </option>
+    `;
+ 
+    return;
+  }
+ 
+ 
+  data.forEach(
+    method => {
+ 
+      const option =
+        document.createElement(
+          "option"
+        );
+ 
+ 
+      option.value =
+        method.id;
+ 
+ 
+      option.textContent =
+        method.name;
+ 
+ 
+      select.appendChild(
+        option
+      );
+ 
+    }
+  );
+ 
+}
+ 
+ 
+/* ==========================================
+   SUBMIT ORDER
+========================================== */
+ 
+document
+  .getElementById(
+    "orderForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(event) {
+ 
+      event.preventDefault();
+ 
+ 
+      const button =
+        document.getElementById(
+          "submitButton"
+        );
+ 
+ 
+      const message =
+        document.getElementById(
+          "form-message"
+        );
+ 
+ 
+      button.disabled =
+        true;
+ 
+ 
+      button.textContent =
+        "MEMPROSES...";
+ 
+ 
+      message.style.display =
+        "none";
+ 
+ 
+      try {
+ 
+        /* -------------------------------
+           CUSTOMER DATA
+        -------------------------------- */
+ 
+        const fullName =
+          document.getElementById(
+            "customerName"
+          ).value.trim();
+ 
+ 
+        const email =
+          document.getElementById(
+            "customerEmail"
+          ).value.trim();
+ 
+ 
+        const whatsapp =
+          document.getElementById(
+            "customerWhatsapp"
+          ).value.trim();
+ 
+ 
+        const mt5Account =
+          document.getElementById(
+            "mt5Account"
+          ).value.trim();
+ 
+ 
+        const broker =
+          document.getElementById(
+            "broker"
+          ).value.trim();
+ 
+ 
+        const paymentMethodId =
+          document.getElementById(
+            "paymentMethod"
+          ).value;
+ 
+ 
+        if (!paymentMethodId) {
+ 
+          throw new Error(
+            "Silakan pilih metode pembayaran."
+          );
+ 
+        }
+ 
+ 
+        /* -------------------------------
+           CUSTOMER
+        -------------------------------- */
+ 
+        let customerId = null;
+ 
+ 
+        const {
+          data: existingCustomer,
+          error: findCustomerError
+        } = await supabaseClient
+ 
+          .from("customers")
+ 
+          .select("id")
+ 
+          .eq(
+            "email",
+            email
+          )
+ 
+          .maybeSingle();
+ 
+ 
+        if (findCustomerError) {
+ 
+          throw findCustomerError;
+        }
+ 
+ 
+        /* -------------------------------
+           UPDATE CUSTOMER
+        -------------------------------- */
+ 
+        if (existingCustomer) {
+ 
+          customerId =
+            existingCustomer.id;
+ 
+ 
+          const {
+            error
+          } = await supabaseClient
+ 
+            .from("customers")
+ 
+            .update({
+ 
+              full_name:
+                fullName,
+ 
+              whatsapp:
+                whatsapp,
+ 
+              mt5_account:
+                mt5Account,
+ 
+              broker:
+                broker
+ 
+            })
+ 
+            .eq(
+              "id",
+              customerId
+            );
+ 
+ 
+          if (error) {
+ 
+            throw error;
+          }
+ 
+        }
+ 
+ 
+        /* -------------------------------
+           CREATE CUSTOMER
+        -------------------------------- */
+ 
+        else {
+ 
+          const {
+            data: newCustomer,
+            error
+          } = await supabaseClient
+ 
+            .from("customers")
+ 
+            .insert({
+ 
+              full_name:
+                fullName,
+ 
+              email:
+                email,
+ 
+              whatsapp:
+                whatsapp,
+ 
+              mt5_account:
+                mt5Account,
+ 
+              broker:
+                broker
+ 
+            })
+ 
+            .select("id")
+ 
+            .single();
+ 
+ 
+          if (error) {
+ 
+            throw error;
+          }
+ 
+ 
+          customerId =
+            newCustomer.id;
+ 
+        }
+ 
+ 
+        /* -------------------------------
+           PRICE
+        -------------------------------- */
+ 
+        const normalAmount =
+          Number(
+            selectedProduct.price || 0
+          );
+ 
+ 
+        const totalAmount =
+          getProductPrice(
+            selectedProduct
+          );
+ 
+ 
+        const discountAmount =
+          Math.max(
+            0,
+            normalAmount -
+            totalAmount
+          );
+ 
+ 
+        /* -------------------------------
+           ORDER NUMBER
+        -------------------------------- */
+ 
+        const orderNumber =
+          "GHE-" +
+          Date.now();
+ 
+ 
+        /* -------------------------------
+           CREATE ORDER
+        -------------------------------- */
+ 
+        const {
+          data: order,
+          error: orderError
+        } = await supabaseClient
+ 
+          .from("orders")
+ 
+          .insert({
+ 
+            order_number:
+              orderNumber,
+ 
+            customer_id:
+              customerId,
+ 
+            product_id:
+              selectedProduct.id,
+ 
+            normal_amount:
+              normalAmount,
+ 
+            discount_amount:
+              discountAmount,
+ 
+            total_amount:
+              totalAmount,
+ 
+            status:
+              "pending",
+ 
+            verification_note:
+              "Metode pembayaran: " +
+              paymentMethodId
+ 
+          })
+ 
+          .select(
+            "id,order_number"
+          )
+ 
+          .single();
+ 
+ 
+        if (orderError) {
+ 
+          throw orderError;
+        }
+ 
+ 
+        /* -------------------------------
+           SUCCESS
+        -------------------------------- */
+ 
+        message.className =
+          "success";
+ 
+ 
+        message.style.display =
+          "block";
+ 
+ 
+        message.innerHTML = `
+ 
+          <strong>
+            Pesanan berhasil dibuat.
+          </strong>
+ 
+          <br><br>
+ 
+          Nomor Pesanan:
+ 
+          <strong>
+            ${order.order_number}
+          </strong>
+ 
+          <br><br>
+ 
+          Pesanan Anda telah diterima.
+          Silakan lanjutkan proses pembayaran.
+ 
+        `;
+ 
+ 
+        document
+          .getElementById(
+            "orderForm"
+          )
+          .reset();
+ 
+ 
+        button.textContent =
+          "PESANAN BERHASIL";
+ 
+ 
+      }
+ 
+      catch (error) {
+ 
+        console.error(
+          "ORDER ERROR:",
+          error
+        );
+ 
+ 
+        message.className =
+          "danger";
+ 
+ 
+        message.style.display =
+          "block";
+ 
+ 
+        message.textContent =
+          "Pesanan gagal dibuat: " +
+          error.message;
+ 
+ 
+        button.disabled =
+          false;
+ 
+ 
+        button.textContent =
+          "BUAT PESANAN";
+ 
+      }
+ 
+    }
+  );
+ 
+ 
+/* ==========================================
+   START
+========================================== */
+ 
+loadProducts();
+ 
+</script>
+ 
+</body>
+</html>

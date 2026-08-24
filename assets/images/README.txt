@@ -1,0 +1,1 @@
+Tempat logo, screenshot EA, chart performa, dan gambar produk.
