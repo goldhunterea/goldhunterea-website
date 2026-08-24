@@ -1487,7 +1487,7 @@ document
           error: paymentMethodError
         } = await supabaseClient
           .from("payment_methods")
-          .select("id,name,method_type,qris_image_url")
+          .select("id,name,method_type,account_number,account_name,qris_image_url")
           .eq("id", paymentMethodId)
           .single();
 
@@ -1660,7 +1660,11 @@ email: email,
 fullName: fullName,
 orderNumber: order.order_number,
 totalAmount: totalAmount,
-paymentMethod: paymentMethod.name
+paymentMethod: paymentMethod.name,
+
+accountNumber: paymentMethod.account_number,
+
+accountName: paymentMethod.account_name
 })
 });
 } catch (emailError) {
