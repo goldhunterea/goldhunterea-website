@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Konfirmasi Pembayaran - GOLD HUNTER EA</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #0b0f14;
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 30px auto;
+    }
+
+    .card {
+      background: #151b23;
+      border: 1px solid #293241;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      color: #f5c542;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #b7c0cc;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid #394555;
+      background: #0e141c;
+      color: white;
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #f5c542;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+    }
+
+    .info {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #101722;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: 0;
+      border-radius: 9px;
+      background: #f5c542;
+      color: #111;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .success {
+      display: block;
+      background: #12351f;
+      border: 1px solid #237542;
+      color: #b9f6c9;
+    }
+
+    .error {
+      display: block;
+      background: #3a1616;
+      border: 1px solid #8f3030;
+      color: #ffc1c1;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #f5c542;
+      text-decoration: none;
+    }
+
+    .small {
+      color: #9ca7b5;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>GOLD HUNTER EA</h1>
+
+    <div class="subtitle">
+      KONFIRMASI PEMBAYARAN
+    </div>
+
+    <form id="confirmForm">
+
+      <label for="orderNumber">
+        Nomor Pesanan *
+      </label>
+
+      <input
+        type="text"
+        id="orderNumber"
+        placeholder="Contoh: GHE-123456789"
+        required
+      >
+
+      <label for="customerName">
+        Nama Pembeli *
+      </label>
+
+      <input
+        type="text"
+        id="customerName"
+        placeholder="Nama lengkap"
+        required
+      >
+
+      <label for="customerEmail">
+        Email *
+      </label>
+
+      <input
+        type="email"
+        id="customerEmail"
+        placeholder="email@contoh.com"
+        required
+      >
+
+      <label for="whatsapp">
+        WhatsApp
+      </label>
+
+      <input
+        type="text"
+        id="whatsapp"
+        placeholder="08xxxxxxxxxx"
+      >
+
+      <label for="paymentMethod">
+        Metode Pembayaran
+      </label>
+
+      <select id="paymentMethod">
+
+        <option value="">
+          Pilih metode pembayaran
+        </option>
+
+        <option value="BCA">
+          BCA
+        </option>
+
+        <option value="BRI">
+          BRI
+        </option>
+
+        <option value="QRIS">
+          QRIS
+        </option>
+
+      </select>
+
+      <label for="amount">
+        Jumlah Transfer *
+      </label>
+
+      <input
+        type="number"
+        id="amount"
+        placeholder="Contoh: 150000"
+        min="1"
+        required
+      >
+
+      <label for="proof">
+        Bukti Transfer *
+      </label>
+
+      <input
+        type="file"
+        id="proof"
+        accept="image/jpeg,image/png,image/webp,application/pdf"
+        required
+      >
+
+      <div class="small">
+        Format: JPG, PNG, WEBP atau PDF. Maksimal sekitar 5 MB.
+      </div>
+
+      <div class="info">
+        Pastikan bukti transfer terlihat jelas dan nomor pesanan
+        yang Anda masukkan sudah benar.
+      </div>
+
+      <button
+        type="submit"
+        id="submitButton"
+      >
+        KIRIM KONFIRMASI PEMBAYARAN
+      </button>
+
+    </form>
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+    <a
+      href="/"
+      class="back"
+    >
+      ← Kembali ke GOLD HUNTER EA
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+const form =
+  document.getElementById("confirmForm");
+
+const button =
+  document.getElementById("submitButton");
+
+const message =
+  document.getElementById("message");
+
+
+form.addEventListener(
+  "submit",
+  async function (event) {
+
+    event.preventDefault();
+
+    message.className = "message";
+    message.textContent = "";
+
+    const orderNumber =
+      document
+        .getElementById("orderNumber")
+        .value
+        .trim();
+
+    const customerName =
+      document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+    const customerEmail =
+      document
+        .getElementById("customerEmail")
+        .value
+        .trim();
+
+    const whatsapp =
+      document
+        .getElementById("whatsapp")
+        .value
+        .trim();
+
+    const paymentMethod =
+      document
+        .getElementById("paymentMethod")
+        .value;
+
+    const amount =
+      Number(
+        document
+          .getElementById("amount")
+          .value
+      );
+
+    const file =
+      document
+        .getElementById("proof")
+        .files[0];
+
+
+    if (!file) {
+
+      message.className =
+        "message error";
+
+      message.textContent =
+        "Silakan pilih bukti transfer.";
+
+      return;
+    }
+
+
+    if (file.size > 5 * 1024 * 1024) {
+
+      message.className =
+        "message error";
+
+      message.textContent =
+        "Ukuran file maksimal sekitar 5 MB.";
+
+      return;
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+      "MENGIRIM KONFIRMASI...";
+
+
+    try {
+
+      const fileBase64 =
+        await fileToBase64(file);
+
+
+      const response =
+        await fetch(
+          "/.netlify/functions/confirm-payment",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+              orderNumber:
+                orderNumber,
+
+              customerName:
+                customerName,
+
+              customerEmail:
+                customerEmail,
+
+              whatsapp:
+                whatsapp,
+
+              paymentMethod:
+                paymentMethod,
+
+              amount:
+                amount,
+
+              fileName:
+                file.name,
+
+              fileType:
+                file.type,
+
+              fileBase64:
+                fileBase64
+
+            })
+          }
+        );
+
+
+      const result =
+        await response.json();
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          result.error ||
+          "Konfirmasi pembayaran gagal."
+        );
+
+      }
+
+
+      message.className =
+        "message success";
+
+      message.innerHTML =
+        "<strong>Konfirmasi berhasil dikirim.</strong><br><br>" +
+        "Nomor Pesanan: <strong>" +
+        orderNumber +
+        "</strong><br><br>" +
+        "Bukti transfer sudah diterima sistem dan sedang menunggu verifikasi admin.<br><br>" +
+        "Email konfirmasi juga telah dikirim ke email pembeli.";
+
+      form.reset();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.className =
+        "message error";
+
+      message.textContent =
+        error.message ||
+        "Terjadi kesalahan saat mengirim konfirmasi.";
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+      "KIRIM KONFIRMASI PEMBAYARAN";
+
+  }
+);
+
+
+function fileToBase64(file) {
+
+  return new Promise(
+    function (resolve, reject) {
+
+      const reader =
+        new FileReader();
+
+      reader.onload = function () {
+
+        const result =
+          reader.result;
+
+        const base64 =
+          result.split(",")[1];
+
+        resolve(base64);
+
+      };
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+</script>
+
+</body>
+</html>
