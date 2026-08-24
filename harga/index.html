@@ -1169,7 +1169,7 @@ async function loadPaymentMethods() {
     .from("payment_methods")
  
     .select(
-      "id,name,method_type,qris_image_url"
+      "id,name,method_type,account_number,account_name,qris_image_url"
     )
  
     .eq(
@@ -1585,9 +1585,43 @@ ${rupiah(totalAmount)}
 </strong>
 <br><br>
 <strong>
+
 Metode Pembayaran: ${paymentMethod.name}
+
 </strong>
+
+${
+
+paymentMethod.method_type.toLowerCase() !== "qris" && paymentMethod.account_number
+
+? `
+
+<div class="payment-result">
+
+<div class="payment-title">
+
+DETAIL TRANSFER
+
+</div>
+
+<div class="payment-instruction">
+
+No. Rekening: <strong>${paymentMethod.account_number}</strong><br>
+
+A/N: <strong>${paymentMethod.account_name || ""}</strong>
+
+</div>
+
+</div>
+
+`
+
+: ""
+
+}
+
 <br><br>
+
 ${
 paymentMethod.method_type.toLowerCase() === "qris" &&
 paymentMethod.qris_image_url
