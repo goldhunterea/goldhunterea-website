@@ -45,7 +45,7 @@ async function sendReset(){
 const e=email.value.trim();
 if(!e){document.getElementById("msg").innerHTML='<div class="msg err">Masukkan email Admin.</div>';return}
 document.getElementById("msg").textContent="Mengirim...";
-const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});
+const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+"/admin/"});
 document.getElementById("msg").innerHTML=error?`<div class="msg err">${esc(error.message)}</div>`:'<div class="msg ok">Link reset sudah dikirim. Gunakan email recovery TERBARU.</div>';
 }
 function showNewPassword(){
