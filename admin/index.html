@@ -748,6 +748,8 @@ function renderPayments(){
 
     <th>Pesanan</th>
     <th>Pembeli</th>
+    <th>MT5 Account</th>
+    <th>Broker</th>
     <th>WhatsApp</th>
     <th>Metode</th>
     <th>Jumlah</th>
@@ -829,6 +831,12 @@ function renderPayments(){
         </strong>
         <br>
         ${esc(p.customer_email)}
+      </td>
+      <td>
+        <strong>${esc(p.mt5_account||"-")}</strong>
+      </td>
+      <td>
+        ${esc(p.broker||"-")}
       </td>
 
       <td>

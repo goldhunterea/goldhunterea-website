@@ -163,8 +163,49 @@ exports.handler = async function (event) {
       );
     }
 
-    const payments =
+    let payments =
       JSON.parse(responseText);
+
+    // Ambil data MT5 dan broker dari tabel customers.
+    for (const payment of payments) {
+      try {
+        if (!payment.customer_id) {
+          payment.mt5_account = null;
+          payment.broker = null;
+          continue;
+        }
+
+        const customerResponse = await fetch(
+          supabaseUrl +
+          "/rest/v1/customers" +
+          "?select=mt5_account,broker" +
+          "&id=eq." + encodeURIComponent(payment.customer_id) +
+          "&limit=1",
+          {
+            method: "GET",
+            headers: {
+              "apikey": serviceKey,
+              "Authorization": "Bearer " + serviceKey,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+
+        if (customerResponse.ok) {
+          const customerRows = await customerResponse.json();
+          const customer = customerRows[0];
+          payment.mt5_account = customer ? customer.mt5_account : null;
+          payment.broker = customer ? customer.broker : null;
+        } else {
+          payment.mt5_account = null;
+          payment.broker = null;
+        }
+      } catch (customerError) {
+        console.error("CUSTOMER DATA ERROR:", customerError);
+        payment.mt5_account = null;
+        payment.broker = null;
+      }
+    }
 
     return {
       statusCode: 200,
