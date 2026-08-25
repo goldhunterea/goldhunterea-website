@@ -495,7 +495,10 @@ exports.handler = async function (event) {
       );
 
       throw new Error(
-        "Lisensi dibuat tetapi status pesanan gagal diperbarui."
+        "Lisensi dibuat tetapi status pesanan gagal diperbarui. HTTP " +
+        updateOrderResponse.status +
+        " - " +
+        updateError
       );
     }
 
