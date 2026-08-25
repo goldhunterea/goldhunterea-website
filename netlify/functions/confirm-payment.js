@@ -133,8 +133,17 @@ exports.handler = async function (event) {
     );
 
     if (!orderResponse.ok) {
+      const orderError = await orderResponse.text();
+
+      console.error(
+        "SUPABASE ORDERS ERROR:",
+        orderResponse.status,
+        orderError
+      );
+
       throw new Error(
-        "Gagal mengambil data pesanan dari Supabase."
+        "Gagal mengambil data pesanan dari Supabase. HTTP " +
+        orderResponse.status
       );
     }
 
