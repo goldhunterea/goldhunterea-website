@@ -566,9 +566,22 @@ async function loadPayments(){
 
   try{
 
+    const {data:{session}} = await sb.auth.getSession();
+
+    if(!session || !session.access_token){
+      throw new Error("Sesi Admin tidak ditemukan. Silakan login ulang.");
+    }
+
     const response=
       await fetch(
-        "/.netlify/functions/admin-payments"
+        "/.netlify/functions/admin-payments",
+        {
+          method:"GET",
+          headers:{
+            "Authorization": "Bearer "+session.access_token,
+            "Content-Type": "application/json"
+          }
+        }
       );
 
     const data=
