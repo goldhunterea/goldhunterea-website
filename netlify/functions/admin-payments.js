@@ -166,10 +166,42 @@ exports.handler = async function (event) {
     let payments =
       JSON.parse(responseText);
 
-    // Ambil data MT5 dan broker dari tabel customers.
+    // Ambil customer_id dari orders berdasarkan order_number,
+    // kemudian ambil MT5 Account dan Broker dari customers.
     for (const payment of payments) {
       try {
-        if (!payment.customer_id) {
+        if (!payment.order_number) {
+          payment.mt5_account = null;
+          payment.broker = null;
+          continue;
+        }
+
+        const orderResponse = await fetch(
+          supabaseUrl +
+          "/rest/v1/orders" +
+          "?select=customer_id" +
+          "&order_number=eq." + encodeURIComponent(payment.order_number) +
+          "&limit=1",
+          {
+            method: "GET",
+            headers: {
+              "apikey": serviceKey,
+              "Authorization": "Bearer " + serviceKey,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+
+        if (!orderResponse.ok) {
+          payment.mt5_account = null;
+          payment.broker = null;
+          continue;
+        }
+
+        const orderRows = await orderResponse.json();
+        const order = orderRows[0];
+
+        if (!order || !order.customer_id) {
           payment.mt5_account = null;
           payment.broker = null;
           continue;
@@ -179,7 +211,7 @@ exports.handler = async function (event) {
           supabaseUrl +
           "/rest/v1/customers" +
           "?select=mt5_account,broker" +
-          "&id=eq." + encodeURIComponent(payment.customer_id) +
+          "&id=eq." + encodeURIComponent(order.customer_id) +
           "&limit=1",
           {
             method: "GET",
