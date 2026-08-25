@@ -1,85 +1,492 @@
 <!doctype html>
 <html lang="id">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GOLD HUNTER EA — Admin</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#050505;color:#eee;font-family:Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#050505;color:#eee;font-family:Arial,sans-serif}
 .box{max-width:430px;margin:8vh auto;padding:30px;background:#111;border:1px solid #292929;border-radius:16px}
-h1,.gold{color:#f6b91a}input,button{width:100%;padding:13px;margin:7px 0;border-radius:8px}
-input{background:#080808;color:#fff;border:1px solid #444}button{background:#f6b91a;color:#111;border:0;font-weight:800;cursor:pointer}
-.link{color:#f6b91a;text-align:center;margin-top:12px;cursor:pointer}.msg{margin-top:12px;padding:11px;border-radius:8px;background:#181818}
-.err{border:1px solid #713b3b;color:#ffb7b7}.ok{border:1px solid #3c633f;color:#bce7bf}
-.wrap{max-width:1100px;margin:auto;padding:28px}.top{display:flex;justify-content:space-between;align-items:center}
-.logout{width:auto;padding:10px 18px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
-.card{background:#111;border:1px solid #292929;border-radius:12px;padding:18px}.num{font-size:28px;color:#f6b91a;font-weight:800}
+h1,.gold{color:#f6b91a}
+input,button{width:100%;padding:13px;margin:7px 0;border-radius:8px}
+input{background:#080808;color:#fff;border:1px solid #444}
+button{background:#f6b91a;color:#111;border:0;font-weight:800;cursor:pointer}
+.link{color:#f6b91a;text-align:center;margin-top:12px;cursor:pointer}
+.msg{margin-top:12px;padding:11px;border-radius:8px;background:#181818}
+.err{border:1px solid #713b3b;color:#ffb7b7}
+.ok{border:1px solid #3c633f;color:#bce7bf}
+
+.wrap{max-width:1200px;margin:auto;padding:28px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.logout{width:auto;padding:10px 18px}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+.card{background:#111;border:1px solid #292929;border-radius:12px;padding:18px}
+.num{font-size:28px;color:#f6b91a;font-weight:800}
+
 .panel{background:#111;border:1px solid #292929;border-radius:14px;padding:20px;margin-top:16px}
-@media(max-width:700px){.cards{grid-template-columns:1fr 1fr}.wrap{padding:16px}}
-</style></head>
-<body><div id="app"></div>
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{padding:12px 10px;border-bottom:1px solid #292929;text-align:left;vertical-align:top}
+th{color:#f6b91a;background:#0b0b0b}
+.status{font-weight:bold}
+.pending{color:#ffd36a}
+.approved{color:#8ee28e}
+.rejected{color:#ff8585}
+.refresh{width:auto;padding:10px 18px;margin:0 0 10px}
+.small{color:#aaa;font-size:13px}
+.empty{text-align:center;color:#aaa;padding:30px}
+
+@media(max-width:800px){
+.cards{grid-template-columns:1fr 1fr}
+.wrap{padding:16px}
+}
+</style>
+</head>
+
+<body>
+<div id="app"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+
 <script>
+
 let sb;
 const app=document.getElementById("app");
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g,function(m){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m];
+  });
+}
+
 function showLogin(){
-app.innerHTML=`<div class="box"><h1>GOLD HUNTER EA</h1><h2>Login Admin</h2>
-<input id="email" type="email" placeholder="Email Admin" autocomplete="username">
-<input id="password" type="password" placeholder="Password" autocomplete="current-password">
-<button onclick="doLogin()">LOGIN</button><div class="link" onclick="showForgot()">Lupa Password?</div><div id="msg"></div></div>`;
+
+  app.innerHTML=`
+  <div class="box">
+    <h1>GOLD HUNTER EA</h1>
+    <h2>Login Admin</h2>
+
+    <input id="email" type="email"
+      placeholder="Email Admin"
+      autocomplete="username">
+
+    <input id="password" type="password"
+      placeholder="Password"
+      autocomplete="current-password">
+
+    <button onclick="doLogin()">LOGIN</button>
+
+    <div class="link" onclick="showForgot()">
+      Lupa Password?
+    </div>
+
+    <div id="msg"></div>
+  </div>`;
 }
+
 async function doLogin(){
-document.getElementById("msg").textContent="Memproses...";
-const {error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});
-if(error)document.getElementById("msg").innerHTML=`<div class="msg err">${esc(error.message)}</div>`;
+
+  document.getElementById("msg").textContent="Memproses...";
+
+  const {error}=await sb.auth.signInWithPassword({
+    email:document.getElementById("email").value.trim(),
+    password:document.getElementById("password").value
+  });
+
+  if(error){
+    document.getElementById("msg").innerHTML=
+      `<div class="msg err">${esc(error.message)}</div>`;
+  }
 }
+
 function showForgot(){
-app.innerHTML=`<div class="box"><h1>GOLD HUNTER EA</h1><h2>Reset Password</h2>
-<p>Masukkan email Admin. Link reset akan kembali ke halaman Admin online ini.</p>
-<input id="email" type="email" placeholder="Email Admin">
-<button onclick="sendReset()">KIRIM LINK RESET</button>
-<div class="link" onclick="showLogin()">← Kembali ke Login</div><div id="msg"></div></div>`;
+
+  app.innerHTML=`
+  <div class="box">
+    <h1>GOLD HUNTER EA</h1>
+    <h2>Reset Password</h2>
+
+    <p>Masukkan email Admin.</p>
+
+    <input id="email" type="email"
+      placeholder="Email Admin">
+
+    <button onclick="sendReset()">
+      KIRIM LINK RESET
+    </button>
+
+    <div class="link" onclick="showLogin()">
+      ← Kembali ke Login
+    </div>
+
+    <div id="msg"></div>
+  </div>`;
 }
+
 async function sendReset(){
-const e=email.value.trim();
-if(!e){document.getElementById("msg").innerHTML='<div class="msg err">Masukkan email Admin.</div>';return}
-document.getElementById("msg").textContent="Mengirim...";
-const {error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+"/admin/"});
-document.getElementById("msg").innerHTML=error?`<div class="msg err">${esc(error.message)}</div>`:'<div class="msg ok">Link reset sudah dikirim. Gunakan email recovery TERBARU.</div>';
+
+  const e=document.getElementById("email").value.trim();
+
+  if(!e){
+    document.getElementById("msg").innerHTML=
+      '<div class="msg err">Masukkan email Admin.</div>';
+    return;
+  }
+
+  document.getElementById("msg").textContent="Mengirim...";
+
+  const {error}=await sb.auth.resetPasswordForEmail(e,{
+    redirectTo:location.origin+"/admin/"
+  });
+
+  document.getElementById("msg").innerHTML=
+    error
+      ? `<div class="msg err">${esc(error.message)}</div>`
+      : '<div class="msg ok">Link reset sudah dikirim. Gunakan email recovery TERBARU.</div>';
 }
+
 function showNewPassword(){
-app.innerHTML=`<div class="box"><h1>GOLD HUNTER EA</h1><h2>Buat Password Baru</h2>
-<input id="p1" type="password" placeholder="Password baru">
-<input id="p2" type="password" placeholder="Ulangi password baru">
-<button onclick="savePassword()">SIMPAN PASSWORD</button><div id="msg"></div></div>`;
+
+  app.innerHTML=`
+  <div class="box">
+    <h1>GOLD HUNTER EA</h1>
+    <h2>Buat Password Baru</h2>
+
+    <input id="p1" type="password"
+      placeholder="Password baru">
+
+    <input id="p2" type="password"
+      placeholder="Ulangi password baru">
+
+    <button onclick="savePassword()">
+      SIMPAN PASSWORD
+    </button>
+
+    <div id="msg"></div>
+  </div>`;
 }
+
 async function savePassword(){
-if(p1.value.length<8){msg2("Password minimal 8 karakter.",true);return}
-if(p1.value!==p2.value){msg2("Password tidak sama.",true);return}
-msg2("Menyimpan...");
-const {error}=await sb.auth.updateUser({password:p1.value});
-if(error){msg2(error.message,true);return}
-msg2("Password berhasil diubah. Silakan login.");
-setTimeout(showLogin,1500);
+
+  const p1=document.getElementById("p1").value;
+  const p2=document.getElementById("p2").value;
+
+  if(p1.length<8){
+    msg2("Password minimal 8 karakter.",true);
+    return;
+  }
+
+  if(p1!==p2){
+    msg2("Password tidak sama.",true);
+    return;
+  }
+
+  msg2("Menyimpan...");
+
+  const {error}=await sb.auth.updateUser({
+    password:p1
+  });
+
+  if(error){
+    msg2(error.message,true);
+    return;
+  }
+
+  msg2("Password berhasil diubah. Silakan login.");
+
+  setTimeout(showLogin,1500);
 }
-function msg2(t,e=false){document.getElementById("msg").innerHTML=`<div class="msg ${e?"err":"ok"}">${esc(t)}</div>`}
-async function logout(){await sb.auth.signOut()}
+
+function msg2(t,e=false){
+  document.getElementById("msg").innerHTML=
+    `<div class="msg ${e?"err":"ok"}">${esc(t)}</div>`;
+}
+
+async function logout(){
+  await sb.auth.signOut();
+}
+
+function statusClass(status){
+
+  const s=String(status||"").toLowerCase();
+
+  if(s==="pending") return "pending";
+  if(s==="approved" || s==="verified" || s==="paid") return "approved";
+  if(s==="rejected") return "rejected";
+
+  return "";
+}
+
+function formatDate(value){
+
+  if(!value) return "-";
+
+  try{
+    return new Date(value).toLocaleString("id-ID");
+  }catch(e){
+    return value;
+  }
+}
+
+async function loadPayments(){
+
+  const box=document.getElementById("paymentsBody");
+
+  if(!box) return;
+
+  box.innerHTML=
+    '<tr><td colspan="8" class="empty">Mengambil data pembayaran...</td></tr>';
+
+  try{
+
+    const {data:{session}}=
+      await sb.auth.getSession();
+
+    if(!session){
+      showLogin();
+      return;
+    }
+
+    const response=await fetch(
+      "/.netlify/functions/admin-payments",
+      {
+        method:"GET",
+        headers:{
+          "Authorization":
+            "Bearer "+session.access_token
+        }
+      }
+    );
+
+    const result=await response.json();
+
+    if(!response.ok || !result.success){
+
+      throw new Error(
+        result.message ||
+        "Gagal mengambil data pembayaran."
+      );
+    }
+
+    const payments=result.payments || [];
+
+    updateStats(payments);
+
+    if(!payments.length){
+
+      box.innerHTML=
+        '<tr><td colspan="8" class="empty">Belum ada konfirmasi pembayaran.</td></tr>';
+
+      return;
+    }
+
+    box.innerHTML=payments.map(function(p){
+
+      const status=String(p.status||"pending");
+
+      return `
+      <tr>
+        <td>${esc(p.order_number)}</td>
+        <td>
+          <strong>${esc(p.customer_name)}</strong><br>
+          <span class="small">${esc(p.customer_email)}</span>
+        </td>
+        <td>${esc(p.whatsapp)}</td>
+        <td>${esc(p.payment_method)}</td>
+        <td>Rp ${esc(p.amount)}</td>
+        <td>
+          <span class="status ${statusClass(status)}">
+            ${esc(status.toUpperCase())}
+          </span>
+        </td>
+        <td>${formatDate(p.created_at)}</td>
+        <td>
+          <span class="small">
+            Bukti: ${esc(p.proof_path || "-")}
+          </span>
+        </td>
+      </tr>`;
+    }).join("");
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML=
+      `<tr>
+        <td colspan="8" class="empty">
+          <div class="msg err">
+            ${esc(error.message)}
+          </div>
+        </td>
+      </tr>`;
+  }
+}
+
+function updateStats(payments){
+
+  const total=payments.length;
+
+  const pending=payments.filter(function(p){
+    return String(p.status||"").toLowerCase()==="pending";
+  }).length;
+
+  const approved=payments.filter(function(p){
+    const s=String(p.status||"").toLowerCase();
+    return s==="approved" || s==="verified" || s==="paid";
+  }).length;
+
+  document.getElementById("statOrders").textContent=total;
+  document.getElementById("statPending").textContent=pending;
+  document.getElementById("statApproved").textContent=approved;
+}
+
 function dashboard(){
-app.innerHTML=`<div class="wrap"><div class="top"><div><h1>GOLD HUNTER EA</h1><b>Admin Dashboard</b></div><button class="logout" onclick="logout()">KELUAR</button></div>
-<div class="cards"><div class="card"><div class="num">0</div>Pesanan</div><div class="card"><div class="num">0</div>Menunggu Verifikasi</div><div class="card"><div class="num">0</div>Disetujui</div><div class="card"><div class="num">0</div>Lisensi Aktif</div></div>
-<div class="panel"><h2>Admin aktif</h2><p>Login berhasil. Modul pesanan, pembayaran, verifikasi dan lisensi akan kita sambungkan setelah login selesai diuji.</p></div></div>`;
+
+  app.innerHTML=`
+  <div class="wrap">
+
+    <div class="top">
+      <div>
+        <h1>GOLD HUNTER EA</h1>
+        <b>Admin Dashboard</b>
+      </div>
+
+      <button class="logout" onclick="logout()">
+        KELUAR
+      </button>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <div id="statOrders" class="num">0</div>
+        Pesanan / Konfirmasi
+      </div>
+
+      <div class="card">
+        <div id="statPending" class="num">0</div>
+        Menunggu Verifikasi
+      </div>
+
+      <div class="card">
+        <div id="statApproved" class="num">0</div>
+        Disetujui
+      </div>
+
+      <div class="card">
+        <div class="num">0</div>
+        Lisensi Aktif
+      </div>
+
+    </div>
+
+    <div class="panel">
+
+      <div class="top">
+        <div>
+          <h2>Pembayaran Masuk</h2>
+          <div class="small">
+            Daftar konfirmasi pembayaran pelanggan.
+          </div>
+        </div>
+
+        <button class="refresh" onclick="loadPayments()">
+          ↻ REFRESH
+        </button>
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Pesanan</th>
+              <th>Pembeli</th>
+              <th>WhatsApp</th>
+              <th>Metode</th>
+              <th>Jumlah</th>
+              <th>Status</th>
+              <th>Tanggal</th>
+              <th>Bukti</th>
+            </tr>
+          </thead>
+
+          <tbody id="paymentsBody">
+            <tr>
+              <td colspan="8" class="empty">
+                Memuat...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>`;
+
+  loadPayments();
 }
+
 async function init(){
-if(!window.GH_SUPABASE_URL||!window.GH_SUPABASE_PUBLISHABLE_KEY||window.GH_SUPABASE_PUBLISHABLE_KEY==="PASTE_PUBLISHABLE_KEY_HERE"){
-app.innerHTML='<div class="box"><h2>Konfigurasi belum lengkap</h2><p>Isi Publishable Key di config.js.</p></div>';return}
-sb=window.supabase.createClient(window.GH_SUPABASE_URL,window.GH_SUPABASE_PUBLISHABLE_KEY);
-sb.auth.onAuthStateChange((event,session)=>{
-if(event==="PASSWORD_RECOVERY"){showNewPassword();return}
-session?dashboard():showLogin();
-});
-const {data:{session}}=await sb.auth.getSession();
-location.hash.includes("type=recovery")?showNewPassword():session?dashboard():showLogin();
+
+  if(
+    !window.GH_SUPABASE_URL ||
+    !window.GH_SUPABASE_PUBLISHABLE_KEY ||
+    window.GH_SUPABASE_PUBLISHABLE_KEY==="PASTE_PUBLISHABLE_KEY_HERE"
+  ){
+
+    app.innerHTML=
+      '<div class="box"><h2>Konfigurasi belum lengkap</h2><p>Isi Publishable Key di config.js.</p></div>';
+
+    return;
+  }
+
+  sb=window.supabase.createClient(
+    window.GH_SUPABASE_URL,
+    window.GH_SUPABASE_PUBLISHABLE_KEY
+  );
+
+  sb.auth.onAuthStateChange(function(event,session){
+
+    if(event==="PASSWORD_RECOVERY"){
+      showNewPassword();
+      return;
+    }
+
+    if(session){
+      dashboard();
+    }else{
+      showLogin();
+    }
+  });
+
+  const {data:{session}}=
+    await sb.auth.getSession();
+
+  if(location.hash.includes("type=recovery")){
+    showNewPassword();
+  }else if(session){
+    dashboard();
+  }else{
+    showLogin();
+  }
 }
+
 init();
-</script></body></html>
+
+</script>
+</body>
+</html>
