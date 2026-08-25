@@ -7,46 +7,259 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#050505;color:#eee;font-family:Arial,sans-serif}
-.box{max-width:430px;margin:8vh auto;padding:30px;background:#111;border:1px solid #292929;border-radius:16px}
-h1,.gold{color:#f6b91a}
-input,button{width:100%;padding:13px;margin:7px 0;border-radius:8px}
-input{background:#080808;color:#fff;border:1px solid #444}
-button{background:#f6b91a;color:#111;border:0;font-weight:800;cursor:pointer}
-.link{color:#f6b91a;text-align:center;margin-top:12px;cursor:pointer}
-.msg{margin-top:12px;padding:11px;border-radius:8px;background:#181818}
-.err{border:1px solid #713b3b;color:#ffb7b7}
-.ok{border:1px solid #3c633f;color:#bce7bf}
 
-.wrap{max-width:1200px;margin:auto;padding:28px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:15px}
-.logout{width:auto;padding:10px 18px}
+body{
+  margin:0;
+  background:#050505;
+  color:#eee;
+  font-family:Arial,sans-serif
+}
 
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
-.card{background:#111;border:1px solid #292929;border-radius:12px;padding:18px}
-.num{font-size:28px;color:#f6b91a;font-weight:800}
+button,input,select,textarea{
+  font-family:inherit
+}
 
-.panel{background:#111;border:1px solid #292929;border-radius:14px;padding:20px;margin-top:16px}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;margin-top:15px}
-th,td{padding:12px 10px;border-bottom:1px solid #292929;text-align:left;vertical-align:top}
-th{color:#f6b91a;background:#0b0b0b}
-.status{font-weight:bold}
-.pending{color:#ffd36a}
-.approved{color:#8ee28e}
-.rejected{color:#ff8585}
-.refresh{width:auto;padding:10px 18px;margin:0 0 10px}
-.small{color:#aaa;font-size:13px}
-.empty{text-align:center;color:#aaa;padding:30px}
+.box{
+  max-width:430px;
+  margin:8vh auto;
+  padding:30px;
+  background:#111;
+  border:1px solid #292929;
+  border-radius:16px
+}
 
-@media(max-width:800px){
-.cards{grid-template-columns:1fr 1fr}
-.wrap{padding:16px}
+h1,.gold{
+  color:#f6b91a
+}
+
+input,button,select,textarea{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  border-radius:8px
+}
+
+input,select,textarea{
+  background:#080808;
+  color:#fff;
+  border:1px solid #444
+}
+
+button{
+  background:#f6b91a;
+  color:#111;
+  border:0;
+  font-weight:800;
+  cursor:pointer
+}
+
+button:hover{
+  opacity:.9
+}
+
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed
+}
+
+.link{
+  color:#f6b91a;
+  text-align:center;
+  margin-top:12px;
+  cursor:pointer
+}
+
+.msg{
+  margin-top:12px;
+  padding:11px;
+  border-radius:8px
+}
+
+.err{
+  border:1px solid #713b3b;
+  color:#ffb7b7
+}
+
+.ok{
+  border:1px solid #3c633f;
+  color:#bce7bf
+}
+
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:28px
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px
+}
+
+.logout{
+  width:auto;
+  padding:10px 18px
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:22px 0
+}
+
+.card{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:18px
+}
+
+.num{
+  font-size:28px;
+  color:#f6b91a;
+  font-weight:800;
+  margin-bottom:5px
+}
+
+.panel{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:20px;
+  margin-top:16px
+}
+
+.table-wrap{
+  overflow-x:auto
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:950px
+}
+
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid #292929;
+  text-align:left;
+  vertical-align:top
+}
+
+th{
+  color:#f6b91a;
+  background:#0b0b0b
+}
+
+.pending{
+  color:#ffd36a;
+  font-weight:800
+}
+
+.approved{
+  color:#8ee28f;
+  font-weight:800
+}
+
+.rejected{
+  color:#ff8f8f;
+  font-weight:800
+}
+
+.refresh{
+  width:auto;
+  padding:10px 18px;
+  margin-bottom:15px
+}
+
+.verify-btn{
+  background:#f6b91a;
+  color:#111;
+  padding:9px 13px;
+  width:auto;
+  white-space:nowrap
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:9999
+}
+
+.modal-box{
+  width:100%;
+  max-width:560px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#111;
+  border:1px solid #333;
+  border-radius:16px;
+  padding:25px
+}
+
+.modal-title{
+  color:#f6b91a;
+  margin-top:0
+}
+
+.cancel{
+  background:#333;
+  color:#fff
+}
+
+.info{
+  background:#181818;
+  border:1px solid #292929;
+  padding:13px;
+  border-radius:9px;
+  margin:10px 0
+}
+
+.info b{
+  color:#f6b91a
+}
+
+.result{
+  background:#101810;
+  border:1px solid #3c633f;
+  border-radius:10px;
+  padding:15px;
+  margin-top:15px
+}
+
+.license-key{
+  font-size:20px;
+  font-weight:800;
+  color:#f6b91a;
+  word-break:break-all
+}
+
+@media(max-width:700px){
+  .cards{
+    grid-template-columns:1fr 1fr
+  }
+
+  .wrap{
+    padding:16px
+  }
+
+  .top{
+    align-items:flex-start
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div id="app"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -55,438 +268,1302 @@ th{color:#f6b91a;background:#0b0b0b}
 <script>
 
 let sb;
+
 const app=document.getElementById("app");
 
+let payments=[];
+
+let currentPayment=null;
+
+let packages=[];
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
 function esc(s){
-  return String(s ?? "").replace(/[&<>"']/g,function(m){
-    return {
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[m];
-  });
+
+  return String(s??"").replace(
+    /[&<>"']/g,
+    function(m){
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
+    }
+  );
+
 }
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 function showLogin(){
 
   app.innerHTML=`
   <div class="box">
+
     <h1>GOLD HUNTER EA</h1>
+
     <h2>Login Admin</h2>
 
-    <input id="email" type="email"
+    <input
+      id="email"
+      type="email"
       placeholder="Email Admin"
-      autocomplete="username">
+      autocomplete="username"
+    >
 
-    <input id="password" type="password"
+    <input
+      id="password"
+      type="password"
       placeholder="Password"
-      autocomplete="current-password">
+      autocomplete="current-password"
+    >
 
     <button onclick="doLogin()">LOGIN</button>
 
-    <div class="link" onclick="showForgot()">
+    <div
+      class="link"
+      onclick="showForgot()"
+    >
       Lupa Password?
     </div>
 
     <div id="msg"></div>
-  </div>`;
+
+  </div>
+  `;
+
 }
+
 
 async function doLogin(){
 
-  document.getElementById("msg").textContent="Memproses...";
+  const msg=document.getElementById("msg");
+
+  msg.textContent="Memproses...";
 
   const {error}=await sb.auth.signInWithPassword({
-    email:document.getElementById("email").value.trim(),
-    password:document.getElementById("password").value
+    email:email.value.trim(),
+    password:password.value
   });
 
   if(error){
-    document.getElementById("msg").innerHTML=
+
+    msg.innerHTML=
       `<div class="msg err">${esc(error.message)}</div>`;
+
   }
+
 }
+
+
+/* =========================================================
+   RESET PASSWORD
+========================================================= */
 
 function showForgot(){
 
   app.innerHTML=`
   <div class="box">
+
     <h1>GOLD HUNTER EA</h1>
+
     <h2>Reset Password</h2>
 
-    <p>Masukkan email Admin.</p>
+    <p>
+      Masukkan email Admin.
+      Link reset akan kembali ke halaman Admin.
+    </p>
 
-    <input id="email" type="email"
-      placeholder="Email Admin">
+    <input
+      id="email"
+      type="email"
+      placeholder="Email Admin"
+    >
 
     <button onclick="sendReset()">
       KIRIM LINK RESET
     </button>
 
-    <div class="link" onclick="showLogin()">
+    <div
+      class="link"
+      onclick="showLogin()"
+    >
       ← Kembali ke Login
     </div>
 
     <div id="msg"></div>
-  </div>`;
+
+  </div>
+  `;
+
 }
+
 
 async function sendReset(){
 
-  const e=document.getElementById("email").value.trim();
+  const e=email.value.trim();
 
   if(!e){
+
     document.getElementById("msg").innerHTML=
-      '<div class="msg err">Masukkan email Admin.</div>';
+      `<div class="msg err">
+        Masukkan email Admin.
+      </div>`;
+
     return;
   }
 
-  document.getElementById("msg").textContent="Mengirim...";
+  document.getElementById("msg").textContent=
+    "Mengirim...";
 
-  const {error}=await sb.auth.resetPasswordForEmail(e,{
-    redirectTo:location.origin+"/admin/"
-  });
+  const {error}=
+    await sb.auth.resetPasswordForEmail(
+      e,
+      {
+        redirectTo:
+          location.origin+"/admin/"
+      }
+    );
 
   document.getElementById("msg").innerHTML=
     error
-      ? `<div class="msg err">${esc(error.message)}</div>`
-      : '<div class="msg ok">Link reset sudah dikirim. Gunakan email recovery TERBARU.</div>';
+      ? `<div class="msg err">
+          ${esc(error.message)}
+        </div>`
+      : `<div class="msg ok">
+          Link reset sudah dikirim.
+          Gunakan email recovery TERBARU.
+        </div>`;
+
 }
+
 
 function showNewPassword(){
 
   app.innerHTML=`
   <div class="box">
+
     <h1>GOLD HUNTER EA</h1>
+
     <h2>Buat Password Baru</h2>
 
-    <input id="p1" type="password"
-      placeholder="Password baru">
+    <input
+      id="p1"
+      type="password"
+      placeholder="Password baru"
+    >
 
-    <input id="p2" type="password"
-      placeholder="Ulangi password baru">
+    <input
+      id="p2"
+      type="password"
+      placeholder="Ulangi password baru"
+    >
 
     <button onclick="savePassword()">
       SIMPAN PASSWORD
     </button>
 
     <div id="msg"></div>
-  </div>`;
+
+  </div>
+  `;
+
 }
+
 
 async function savePassword(){
 
-  const p1=document.getElementById("p1").value;
-  const p2=document.getElementById("p2").value;
+  if(p1.value.length<8){
 
-  if(p1.length<8){
-    msg2("Password minimal 8 karakter.",true);
+    msg2(
+      "Password minimal 8 karakter.",
+      true
+    );
+
     return;
   }
 
-  if(p1!==p2){
-    msg2("Password tidak sama.",true);
+  if(p1.value!==p2.value){
+
+    msg2(
+      "Password tidak sama.",
+      true
+    );
+
     return;
   }
 
   msg2("Menyimpan...");
 
-  const {error}=await sb.auth.updateUser({
-    password:p1
-  });
+  const {error}=
+    await sb.auth.updateUser({
+      password:p1.value
+    });
 
   if(error){
-    msg2(error.message,true);
+
+    msg2(
+      error.message,
+      true
+    );
+
     return;
   }
 
-  msg2("Password berhasil diubah. Silakan login.");
+  msg2(
+    "Password berhasil diubah. Silakan login."
+  );
 
-  setTimeout(showLogin,1500);
+  setTimeout(
+    showLogin,
+    1500
+  );
+
 }
+
 
 function msg2(t,e=false){
+
   document.getElementById("msg").innerHTML=
-    `<div class="msg ${e?"err":"ok"}">${esc(t)}</div>`;
+    `<div class="msg ${e?"err":"ok"}">
+      ${esc(t)}
+    </div>`;
+
 }
+
 
 async function logout(){
+
   await sb.auth.signOut();
+
 }
 
-function statusClass(status){
 
-  const s=String(status||"").toLowerCase();
-
-  if(s==="pending") return "pending";
-  if(s==="approved" || s==="verified" || s==="paid") return "approved";
-  if(s==="rejected") return "rejected";
-
-  return "";
-}
-
-function formatDate(value){
-
-  if(!value) return "-";
-
-  try{
-    return new Date(value).toLocaleString("id-ID");
-  }catch(e){
-    return value;
-  }
-}
+/* =========================================================
+   LOAD PAYMENT DATA
+========================================================= */
 
 async function loadPayments(){
 
-  const box=document.getElementById("paymentsBody");
+  const panel=
+    document.getElementById("payments-panel");
 
-  if(!box) return;
+  if(panel){
 
-  box.innerHTML=
-    '<tr><td colspan="8" class="empty">Mengambil data pembayaran...</td></tr>';
+    panel.innerHTML=
+      "<p>Memuat pembayaran...</p>";
+
+  }
 
   try{
 
-    const {data:{session}}=
-      await sb.auth.getSession();
+    const response=
+      await fetch(
+        "/.netlify/functions/admin-payments"
+      );
 
-    if(!session){
-      showLogin();
-      return;
-    }
+    const data=
+      await response.json();
 
-    const response=await fetch(
-      "/.netlify/functions/admin-payments",
-      {
-        method:"GET",
-        headers:{
-          "Authorization":
-            "Bearer "+session.access_token
-        }
-      }
-    );
-
-    const result=await response.json();
-
-    if(!response.ok || !result.success){
+    if(!response.ok){
 
       throw new Error(
-        result.message ||
-        "Gagal mengambil data pembayaran."
+        data.message ||
+        "Gagal mengambil pembayaran."
       );
+
     }
 
-    const payments=result.payments || [];
+    payments=
+      data.payments || [];
 
-    updateStats(payments);
+    renderPayments();
 
-    if(!payments.length){
-
-      box.innerHTML=
-        '<tr><td colspan="8" class="empty">Belum ada konfirmasi pembayaran.</td></tr>';
-
-      return;
-    }
-
-    box.innerHTML=payments.map(function(p){
-
-      const status=String(p.status||"pending");
-
-      return `
-      <tr>
-        <td>${esc(p.order_number)}</td>
-        <td>
-          <strong>${esc(p.customer_name)}</strong><br>
-          <span class="small">${esc(p.customer_email)}</span>
-        </td>
-        <td>${esc(p.whatsapp)}</td>
-        <td>${esc(p.payment_method)}</td>
-        <td>Rp ${esc(p.amount)}</td>
-        <td>
-          <span class="status ${statusClass(status)}">
-            ${esc(status.toUpperCase())}
-          </span>
-        </td>
-        <td>${formatDate(p.created_at)}</td>
-        <td>
-          <span class="small">
-            Bukti: ${esc(p.proof_path || "-")}
-          </span>
-        </td>
-      </tr>`;
-    }).join("");
+    updateStats();
 
   }catch(error){
 
-    console.error(error);
+    if(panel){
 
-    box.innerHTML=
-      `<tr>
-        <td colspan="8" class="empty">
-          <div class="msg err">
-            ${esc(error.message)}
-          </div>
-        </td>
-      </tr>`;
+      panel.innerHTML=
+        `<div class="msg err">
+          ${esc(error.message)}
+        </div>`;
+
+    }
+
   }
+
 }
 
-function updateStats(payments){
 
-  const total=payments.length;
+/* =========================================================
+   LOAD LICENSE PACKAGES
+========================================================= */
 
-  const pending=payments.filter(function(p){
-    return String(p.status||"").toLowerCase()==="pending";
-  }).length;
+async function loadPackages(){
 
-  const approved=payments.filter(function(p){
-    const s=String(p.status||"").toLowerCase();
-    return s==="approved" || s==="verified" || s==="paid";
-  }).length;
+  try{
 
-  document.getElementById("statOrders").textContent=total;
-  document.getElementById("statPending").textContent=pending;
-  document.getElementById("statApproved").textContent=approved;
+    const response=
+      await fetch(
+        window.GH_SUPABASE_URL +
+        "/rest/v1/license_packages" +
+        "?select=*&is_active=eq.true" +
+        "&order=sort_order.asc",
+        {
+          headers:{
+            "apikey":
+              window.GH_SUPABASE_PUBLISHABLE_KEY,
+
+            "Authorization":
+              "Bearer "+
+              window.GH_SUPABASE_PUBLISHABLE_KEY
+          }
+        }
+      );
+
+    if(!response.ok){
+
+      throw new Error(
+        "Gagal mengambil paket lisensi."
+      );
+
+    }
+
+    packages=
+      await response.json();
+
+  }catch(error){
+
+    console.error(
+      "LOAD PACKAGES ERROR:",
+      error
+    );
+
+    packages=[];
+
+  }
+
 }
 
-function dashboard(){
+
+/* =========================================================
+   UPDATE STATISTICS
+========================================================= */
+
+function updateStats(){
+
+  const total=
+    payments.length;
+
+  const pending=
+    payments.filter(
+      p =>
+        String(p.status||"").toLowerCase()
+        ==="pending"
+    ).length;
+
+  const approved=
+    payments.filter(
+      p =>
+        ["approved","paid"].includes(
+          String(p.status||"").toLowerCase()
+        )
+    ).length;
+
+  const totalEl=
+    document.getElementById("stat-total");
+
+  const pendingEl=
+    document.getElementById("stat-pending");
+
+  const approvedEl=
+    document.getElementById("stat-approved");
+
+  if(totalEl)
+    totalEl.textContent=total;
+
+  if(pendingEl)
+    pendingEl.textContent=pending;
+
+  if(approvedEl)
+    approvedEl.textContent=approved;
+
+}
+
+
+/* =========================================================
+   RENDER PAYMENTS
+========================================================= */
+
+function renderPayments(){
+
+  const panel=
+    document.getElementById("payments-panel");
+
+  if(!panel)
+    return;
+
+  if(!payments.length){
+
+    panel.innerHTML=
+      "<p>Belum ada pembayaran.</p>";
+
+    return;
+
+  }
+
+  let html=`
+
+  <div class="table-wrap">
+
+  <table>
+
+  <thead>
+
+  <tr>
+
+    <th>Pesanan</th>
+    <th>Pembeli</th>
+    <th>WhatsApp</th>
+    <th>Metode</th>
+    <th>Jumlah</th>
+    <th>Status</th>
+    <th>Tanggal</th>
+    <th>Bukti</th>
+    <th>Aksi</th>
+
+  </tr>
+
+  </thead>
+
+  <tbody>
+  `;
+
+
+  payments.forEach(function(p,index){
+
+    const status=
+      String(p.status||"pending")
+      .toLowerCase();
+
+    let statusClass="pending";
+
+    if(
+      status==="approved" ||
+      status==="paid"
+    ){
+
+      statusClass="approved";
+
+    }
+
+    if(status==="rejected"){
+
+      statusClass="rejected";
+
+    }
+
+    const amount=
+      Number(p.amount||0)
+      .toLocaleString(
+        "id-ID"
+      );
+
+    const date=
+      p.created_at
+        ? new Date(
+            p.created_at
+          ).toLocaleString(
+            "id-ID"
+          )
+        : "-";
+
+    const proof=
+      p.proof_path
+        ? `<span>${esc(p.proof_path)}</span>`
+        : "-";
+
+    const alreadyDone=
+      status==="approved" ||
+      status==="paid" ||
+      status==="rejected";
+
+
+    html+=`
+
+    <tr>
+
+      <td>
+        <strong>
+          ${esc(p.order_number)}
+        </strong>
+      </td>
+
+      <td>
+        <strong>
+          ${esc(p.customer_name)}
+        </strong>
+        <br>
+        ${esc(p.customer_email)}
+      </td>
+
+      <td>
+        ${esc(p.whatsapp||"-")}
+      </td>
+
+      <td>
+        ${esc(p.payment_method||"-")}
+      </td>
+
+      <td>
+        Rp ${amount}
+      </td>
+
+      <td>
+        <span class="${statusClass}">
+          ${esc(status.toUpperCase())}
+        </span>
+      </td>
+
+      <td>
+        ${esc(date)}
+      </td>
+
+      <td>
+        ${proof}
+      </td>
+
+      <td>
+
+        ${
+          alreadyDone
+          ? `<span class="${statusClass}">
+              ${status.toUpperCase()}
+            </span>`
+          : `
+            <button
+              class="verify-btn"
+              onclick="openVerify(${index})"
+            >
+              VERIFIKASI
+            </button>
+          `
+        }
+
+      </td>
+
+    </tr>
+
+    `;
+
+  });
+
+
+  html+=`
+
+  </tbody>
+
+  </table>
+
+  </div>
+  `;
+
+  panel.innerHTML=html;
+
+}
+
+
+/* =========================================================
+   OPEN VERIFY MODAL
+========================================================= */
+
+async function openVerify(index){
+
+  currentPayment=
+    payments[index];
+
+  if(!currentPayment)
+    return;
+
+  await loadPackages();
+
+  const select=
+    document.getElementById(
+      "license-package"
+    );
+
+  if(!select)
+    return;
+
+  if(!packages.length){
+
+    select.innerHTML=
+      `<option value="">
+        Paket lisensi tidak ditemukan
+      </option>`;
+
+  }else{
+
+    select.innerHTML=
+      `<option value="">
+        -- Pilih Paket Lisensi --
+      </option>`+
+      packages.map(function(p){
+
+        return `
+        <option value="${esc(p.id)}">
+          ${esc(p.name)}
+          -
+          Rp ${Number(
+            p.price||0
+          ).toLocaleString("id-ID")}
+          -
+          ${
+            Number(
+              p.duration_days||0
+            )>0
+              ? p.duration_days+" hari"
+              : "Tidak terbatas"
+          }
+        </option>
+        `;
+
+      }).join("");
+
+  }
+
+  document.getElementById(
+    "verify-order"
+  ).textContent=
+    currentPayment.order_number||"-";
+
+  document.getElementById(
+    "verify-name"
+  ).textContent=
+    currentPayment.customer_name||"-";
+
+  document.getElementById(
+    "verify-email"
+  ).textContent=
+    currentPayment.customer_email||"-";
+
+  document.getElementById(
+    "verify-amount"
+  ).textContent=
+    "Rp "+
+    Number(
+      currentPayment.amount||0
+    ).toLocaleString("id-ID");
+
+  document.getElementById(
+    "mt5-account"
+  ).value="";
+
+  document.getElementById(
+    "broker"
+  ).value="HFM";
+
+  document.getElementById(
+    "verification-note"
+  ).value="";
+
+  document.getElementById(
+    "verify-msg"
+  ).innerHTML="";
+
+  document.getElementById(
+    "verify-modal"
+  ).style.display="flex";
+
+}
+
+
+function closeVerify(){
+
+  document.getElementById(
+    "verify-modal"
+  ).style.display="none";
+
+  currentPayment=null;
+
+}
+
+
+/* =========================================================
+   VERIFY PAYMENT
+========================================================= */
+
+async function verifyPayment(){
+
+  if(!currentPayment){
+
+    return;
+  }
+
+  const packageId=
+    document.getElementById(
+      "license-package"
+    ).value;
+
+  const mt5Account=
+    document.getElementById(
+      "mt5-account"
+    ).value.trim();
+
+  const broker=
+    document.getElementById(
+      "broker"
+    ).value.trim();
+
+  const note=
+    document.getElementById(
+      "verification-note"
+    ).value.trim();
+
+  const msg=
+    document.getElementById(
+      "verify-msg"
+    );
+
+  if(!packageId){
+
+    msg.innerHTML=
+      `<div class="msg err">
+        Pilih paket lisensi.
+      </div>`;
+
+    return;
+
+  }
+
+  if(!mt5Account){
+
+    msg.innerHTML=
+      `<div class="msg err">
+        Masukkan nomor akun MT5/HFM.
+      </div>`;
+
+    return;
+
+  }
+
+  if(!broker){
+
+    msg.innerHTML=
+      `<div class="msg err">
+        Masukkan nama broker.
+      </div>`;
+
+    return;
+
+  }
+
+  const button=
+    document.getElementById(
+      "verify-submit"
+    );
+
+  button.disabled=true;
+
+  button.textContent=
+    "MEMPROSES...";
+
+  msg.innerHTML=
+    `<div class="msg">
+      Sedang membuat lisensi...
+    </div>`;
+
+
+  try{
+
+    const response=
+      await fetch(
+        "/.netlify/functions/verify-payment",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            order_number:
+              currentPayment.order_number,
+
+            package_id:
+              packageId,
+
+            mt5_account:
+              mt5Account,
+
+            broker:
+              broker,
+
+            verification_note:
+              note
+
+          })
+        }
+      );
+
+
+    const data=
+      await response.json();
+
+
+    if(!response.ok ||
+       !data.success){
+
+      throw new Error(
+        data.message ||
+        "Verifikasi gagal."
+      );
+
+    }
+
+
+    const license=
+      data.license || {};
+
+
+    msg.innerHTML=`
+
+      <div class="result">
+
+        <strong>
+          PEMBAYARAN BERHASIL DIVERIFIKASI
+        </strong>
+
+        <p>
+          License Key:
+        </p>
+
+        <div class="license-key">
+          ${esc(
+            license.license_key||"-"
+          )}
+        </div>
+
+        <p>
+          Paket:
+          ${esc(
+            license.package_name||"-"
+          )}
+        </p>
+
+        <p>
+          Akun MT5:
+          ${esc(
+            license.mt5_account||"-"
+          )}
+        </p>
+
+        <p>
+          Broker:
+          ${esc(
+            license.broker||"-"
+          )}
+        </p>
+
+        <p>
+          Status:
+          <strong>ACTIVE</strong>
+        </p>
+
+        <p>
+          License Key sudah dibuat.
+          Email lisensi akan dikirim ke pembeli.
+        </p>
+
+      </div>
+
+    `;
+
+
+    button.style.display="none";
+
+
+    await loadPayments();
+
+
+  }catch(error){
+
+    console.error(
+      "VERIFY ERROR:",
+      error
+    );
+
+    msg.innerHTML=
+      `<div class="msg err">
+        ${esc(error.message)}
+      </div>`;
+
+    button.disabled=false;
+
+    button.textContent=
+      "KONFIRMASI & BUAT LISENSI";
+
+  }
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+async function dashboard(){
 
   app.innerHTML=`
+
   <div class="wrap">
 
     <div class="top">
+
       <div>
-        <h1>GOLD HUNTER EA</h1>
-        <b>Admin Dashboard</b>
+
+        <h1>
+          GOLD HUNTER EA
+        </h1>
+
+        <b>
+          Admin Dashboard
+        </b>
+
       </div>
 
-      <button class="logout" onclick="logout()">
+      <button
+        class="logout"
+        onclick="logout()"
+      >
         KELUAR
       </button>
+
     </div>
+
 
     <div class="cards">
 
       <div class="card">
-        <div id="statOrders" class="num">0</div>
-        Pesanan / Konfirmasi
+
+        <div
+          class="num"
+          id="stat-total"
+        >
+          0
+        </div>
+
+        Pesanan
+
       </div>
 
+
       <div class="card">
-        <div id="statPending" class="num">0</div>
+
+        <div
+          class="num"
+          id="stat-pending"
+        >
+          0
+        </div>
+
         Menunggu Verifikasi
+
       </div>
 
+
       <div class="card">
-        <div id="statApproved" class="num">0</div>
+
+        <div
+          class="num"
+          id="stat-approved"
+        >
+          0
+        </div>
+
         Disetujui
+
       </div>
 
+
       <div class="card">
-        <div class="num">0</div>
-        Lisensi Aktif
+
+        <div
+          class="num"
+          id="stat-license"
+        >
+          -
+        </div>
+
+        Lisensi
+
       </div>
 
     </div>
+
 
     <div class="panel">
 
-      <div class="top">
-        <div>
-          <h2>Pembayaran Masuk</h2>
-          <div class="small">
-            Daftar konfirmasi pembayaran pelanggan.
-          </div>
-        </div>
+      <h2>
+        Pembayaran Masuk
+      </h2>
 
-        <button class="refresh" onclick="loadPayments()">
-          ↻ REFRESH
-        </button>
-      </div>
+      <p>
+        Daftar konfirmasi pembayaran pelanggan.
+      </p>
 
-      <div class="table-wrap">
+      <button
+        class="refresh"
+        onclick="loadPayments()"
+      >
+        ↻ REFRESH
+      </button>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Pesanan</th>
-              <th>Pembeli</th>
-              <th>WhatsApp</th>
-              <th>Metode</th>
-              <th>Jumlah</th>
-              <th>Status</th>
-              <th>Tanggal</th>
-              <th>Bukti</th>
-            </tr>
-          </thead>
+      <div id="payments-panel">
 
-          <tbody id="paymentsBody">
-            <tr>
-              <td colspan="8" class="empty">
-                Memuat...
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <p>
+          Memuat pembayaran...
+        </p>
 
       </div>
 
     </div>
 
-  </div>`;
 
-  loadPayments();
+    <div
+      id="verify-modal"
+      class="modal"
+    >
+
+      <div class="modal-box">
+
+        <h2 class="modal-title">
+          Verifikasi Pembayaran
+        </h2>
+
+
+        <div class="info">
+
+          <div>
+            <b>Pesanan:</b>
+            <span id="verify-order"></span>
+          </div>
+
+          <div>
+            <b>Pembeli:</b>
+            <span id="verify-name"></span>
+          </div>
+
+          <div>
+            <b>Email:</b>
+            <span id="verify-email"></span>
+          </div>
+
+          <div>
+            <b>Jumlah:</b>
+            <span id="verify-amount"></span>
+          </div>
+
+        </div>
+
+
+        <label>
+          <strong>
+            Paket Lisensi
+          </strong>
+        </label>
+
+        <select id="license-package">
+
+          <option value="">
+            Memuat paket...
+          </option>
+
+        </select>
+
+
+        <label>
+          <strong>
+            Nomor Akun MT5 / HFM
+          </strong>
+        </label>
+
+        <input
+          id="mt5-account"
+          type="text"
+          placeholder="Contoh: 98199200"
+        >
+
+
+        <label>
+          <strong>
+            Broker
+          </strong>
+        </label>
+
+        <input
+          id="broker"
+          type="text"
+          value="HFM"
+          placeholder="Contoh: HFM"
+        >
+
+
+        <label>
+          <strong>
+            Catatan Verifikasi
+          </strong>
+        </label>
+
+        <textarea
+          id="verification-note"
+          rows="4"
+          placeholder="Catatan admin (opsional)"
+        ></textarea>
+
+
+        <button
+          id="verify-submit"
+          onclick="verifyPayment()"
+        >
+          KONFIRMASI & BUAT LISENSI
+        </button>
+
+
+        <button
+          class="cancel"
+          onclick="closeVerify()"
+        >
+          BATAL
+        </button>
+
+
+        <div id="verify-msg"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+  await loadPackages();
+
+  await loadPayments();
+
 }
+
+
+/* =========================================================
+   INIT
+========================================================= */
 
 async function init(){
 
   if(
     !window.GH_SUPABASE_URL ||
     !window.GH_SUPABASE_PUBLISHABLE_KEY ||
-    window.GH_SUPABASE_PUBLISHABLE_KEY==="PASTE_PUBLISHABLE_KEY_HERE"
+    window.GH_SUPABASE_PUBLISHABLE_KEY===
+      "PASTE_PUBLISHABLE_KEY_HERE"
   ){
 
-    app.innerHTML=
-      '<div class="box"><h2>Konfigurasi belum lengkap</h2><p>Isi Publishable Key di config.js.</p></div>';
+    app.innerHTML=`
+      <div class="box">
+
+        <h2>
+          Konfigurasi belum lengkap
+        </h2>
+
+        <p>
+          Isi Publishable Key di config.js.
+        </p>
+
+      </div>
+    `;
 
     return;
+
   }
 
-  sb=window.supabase.createClient(
-    window.GH_SUPABASE_URL,
-    window.GH_SUPABASE_PUBLISHABLE_KEY
+
+  sb=
+    window.supabase.createClient(
+      window.GH_SUPABASE_URL,
+      window.GH_SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  sb.auth.onAuthStateChange(
+    function(event,session){
+
+      if(
+        event==="PASSWORD_RECOVERY"
+      ){
+
+        showNewPassword();
+
+        return;
+
+      }
+
+      if(session){
+
+        dashboard();
+
+      }else{
+
+        showLogin();
+
+      }
+
+    }
   );
 
-  sb.auth.onAuthStateChange(function(event,session){
 
-    if(event==="PASSWORD_RECOVERY"){
-      showNewPassword();
-      return;
-    }
-
-    if(session){
-      dashboard();
-    }else{
-      showLogin();
-    }
-  });
-
-  const {data:{session}}=
+  const {
+    data:{session}
+  }=
     await sb.auth.getSession();
 
-  if(location.hash.includes("type=recovery")){
+
+  if(
+    location.hash.includes(
+      "type=recovery"
+    )
+  ){
+
     showNewPassword();
+
   }else if(session){
+
     dashboard();
+
   }else{
+
     showLogin();
+
   }
+
 }
+
 
 init();
 
 </script>
+
 </body>
 </html>
